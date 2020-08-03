@@ -1,0 +1,25 @@
+{
+    "name": "php/repositoriBasic",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ignasi Gomis",
+            "email": "igomis@cipfpbatoi.es"
+        }
+    ],
+    "require": {
+        "filp/whoops": "^2.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit tests"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}

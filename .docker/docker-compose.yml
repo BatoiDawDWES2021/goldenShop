@@ -1,0 +1,20 @@
+version: '3.7'
+# Services
+services:
+  # Nginx Service
+  nginx:
+    image: nginx:1.19-alpine
+    ports:
+      - 80:80
+      - 9000:9000
+    volumes:
+      - ${BASE_DIRECTORY}:/var/www/sites:ro
+      - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - php
+  # PHP Service
+  php:
+    build: config/php
+    working_dir: /var/www/sites
+    volumes:
+      - ${BASE_DIRECTORY}:/var/www/sites
