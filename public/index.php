@@ -11,7 +11,7 @@
 </head>
 <body style="margin: 20px;">
 <div class="container" >
-    <form action="processorder.php" method="post">
+    <form action="processOrder.php" method="post">
         <div class="form-group row">
             <label for="goldcointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Gold</label>
             <div class="col-sm-1">
