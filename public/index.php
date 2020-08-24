@@ -1,3 +1,6 @@
+<?php
+    include_once dirname(__FILE__) . '/../config/config.php';
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,31 +15,22 @@
 <body style="margin: 20px;">
 <div class="container" >
     <form action="processOrder.php" method="post">
-        <div class="form-group row">
-            <label for="goldcointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Gold</label>
-            <div class="col-sm-1">
-                <input type="text" class="form-control" id="goldcointqty" name="goldcointqty" placeholder="Enter quantity">
+        <?php
+            foreach ($products as $product){
+                $id = str_replace('.','_',$product['quantity']).$product['format'].$product['metal'];
+        ?>
+            <div class="form-group row">
+                <label for="<?= $id ?>" class="col-sm-3 col-form-label col-form-label-sm"><?= $product['quantity'].' '.$product['format'].' '.
+                    $product['metal'] ?> (<?= $preu[$product['metal']] ?>)</label>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="<?= $id ?>"" name="<?= $id ?>"" placeholder="Enter quantity">
+                </div>
+                <div class="col-sm-3"><img width="70px" height="70px" src="/img/<?= $id?>.jpg"/></div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label for="silvercointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Silver</label>
-            <div class="col-sm-1">
-                <input type="text" class="form-control" id="silvercointqty" name="silvercointqty" placeholder="Enter quantity">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="goldbarqty" class="col-sm-3 col-form-label col-form-label-sm">One Bar Gold 100gr.</label>
-            <div class="col-sm-1">
-                <input type="text" class="form-control" id="goldbarqty" name="goldbarqty" placeholder="Enter quantity">
+        <?php
+            }
+        ?>
 
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="silverbarqty" class="col-sm-3 col-form-label col-form-label-sm">One Bar Silver 1000gr</label>
-            <div class="col-sm-1">
-                <input type="text" class="form-control" id="silverbarqty" name="silverbarqty" placeholder="Enter quantity">
-            </div>
-        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
