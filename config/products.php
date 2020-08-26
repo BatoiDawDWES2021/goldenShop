@@ -12,3 +12,4 @@ $products = array(
     ['metal' => 'Gold' , 'format' => 'Bar' ,  'quantity' => 500 ],
     ['metal' => 'Silver' , 'format' => 'Bar' ,  'quantity' => 1000],
 );
+$shipping = array ('03','46');
