@@ -1,3 +1,6 @@
+<?php
+include_once dirname(__FILE__) . '/../config/config.php';
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,26 +16,26 @@
 <div class="container" >
     <form action="processOrder.php" method="post">
         <div class="form-group row">
-            <label for="goldcointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Gold</label>
+            <label for="goldcointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Gold (<?= $preuOzGold ?>)</label>
             <div class="col-sm-1">
                 <input type="text" class="form-control" id="goldcointqty" name="goldcointqty" placeholder="Enter quantity">
             </div>
         </div>
         <div class="form-group row">
-            <label for="silvercointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Silver</label>
+            <label for="silvercointqty" class="col-sm-3 col-form-label col-form-label-sm">One OZ. Silver (<?= $preuOzSilver ?>)</label>
             <div class="col-sm-1">
                 <input type="text" class="form-control" id="silvercointqty" name="silvercointqty" placeholder="Enter quantity">
             </div>
         </div>
         <div class="form-group row">
-            <label for="goldbarqty" class="col-sm-3 col-form-label col-form-label-sm">One Bar Gold 100gr.</label>
+            <label for="goldbarqty" class="col-sm-3 col-form-label col-form-label-sm">One Bar Gold 100gr. (<?= $preuOzGold ?>)</label>
             <div class="col-sm-1">
                 <input type="text" class="form-control" id="goldbarqty" name="goldbarqty" placeholder="Enter quantity">
 
             </div>
         </div>
         <div class="form-group row">
-            <label for="silverbarqty" class="col-sm-3 col-form-label col-form-label-sm">One Bar Silver 1000gr</label>
+            <label for="silverbarqty" class="col-sm-3 col-form-label col-form-label-sm">One Bar Silver 1000gr (<?= $preuOzSilver ?>)</label>
             <div class="col-sm-1">
                 <input type="text" class="form-control" id="silverbarqty" name="silverbarqty" placeholder="Enter quantity">
             </div>
