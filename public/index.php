@@ -17,15 +17,13 @@
     <form action="processOrder.php" method="post">
         <?php
             foreach ($products as $product){
-                $id = str_replace('.','_',$product['quantity']).$product['format'].$product['metal'];
         ?>
             <div class="form-group row">
-                <label for="<?= $id ?>" class="col-sm-3 col-form-label col-form-label-sm"><?= $product['quantity'].' '.$product['format'].' '.
-                    $product['metal'] ?> (<?= $preu[$product['metal']] ?>)</label>
+                <label for="<?= id($product) ?>" class="col-sm-3 col-form-label col-form-label-sm"><?= description($product) ?> (<?= preu($product) ?>)</label>
                 <div class="col-sm-1">
-                    <input type="text" class="form-control" id="<?= $id ?>"" name="<?= $id ?>"" placeholder="Enter quantity">
+                    <input type="text" class="form-control" id="<?= id($product) ?>"" name="<?= id($product) ?>"" placeholder="Enter quantity">
                 </div>
-                <div class="col-sm-3"><img width="70px" height="70px" src="/img/<?= $id?>.jpg"/></div>
+                <div class="col-sm-3"><img width="70px" height="70px" src="/img/<?= id($product)?>.jpg"/></div>
             </div>
         <?php
             }

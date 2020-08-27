@@ -1,5 +1,25 @@
 <?php
 include_once dirname(__FILE__) . '/../config/config.php';
+
+$errors = function() use ($shipping){
+    $errors = array();
+    extract($_POST);
+    if (count(explode(' ',$name))<2){
+        $errors[] = "A name and a surname are necessary";
+    }
+    if (strlen($postalCode)!== 5) {
+        $errors[] = "Postal Code must be 5 length";
+    }
+    $email_components = explode('@',$email);
+    if ($email_components[1] != 'gmail.com'){
+        $errors[] = 'Domain not available';
+    }
+    $province = substr($postalCode,0,2);
+    if (!in_array($province,$shipping)){
+        $errors[] = 'Postal Code not available for shipping';
+    }
+    return $errors;
+};
 ?>
 <!doctype html>
 <html lang="en">
@@ -14,37 +34,19 @@ include_once dirname(__FILE__) . '/../config/config.php';
 </head>
 <body style="margin: 20px;">
 <?php
-    $errors = array();
-    if (isset($_POST['email'])){
-        $name = $_POST['name'];
-        $address = $_POST['address'];
-        $email = $_POST['email'];
-        $city = $_POST['city'];
-        $postalCode = $_POST['postalCode'];
-        if (strlen($postalCode)!== 5) {
-            $errors[] = "Postal Code must be 5 length";
-        }
-        $email_components = explode('@',$email);
-        if ($email_components[1] != 'gmail.com'){
-            $errors[] = 'Domain not available';
-        }
-        $province = substr($postalCode,0,2);
-        if (!in_array($province,$shipping)){
-            $errors[] = 'Postal Code not available for shipping';
-        }
 
-        if (count($errors)) {
-            foreach ($errors as $error) {
+    if (isset($_POST['email'])){
+        extract($_POST);
+        if (count($errors())) {
+            foreach ($errors() as $error) {
                 echo "<p>$error</p>";
             }
         }
         else {
             $fin = true;
-            echo "<p>$name</p>";
-            echo "<p>$address</p>";
-            echo "<p>$postalCode</p>";
-            echo "<p>$city</p>";
-            echo "<p>$email</p>";
+            foreach ($_POST as $key => $value){
+                echo "<p><b>".ucfirst($key)."</b> : $value</p>";
+            }
         }
     }
 
@@ -68,7 +70,7 @@ include_once dirname(__FILE__) . '/../config/config.php';
             <div class="form-group row">
                 <label for="address" class="col-sm-3 col-form-label col-form-label-sm">Address:</label>
                 <div class="col-sm-3">
-                    <input type="text" class="form-control" id="address" name="address" value="<?= $address ?> "placeholder="Enter your Address">
+                    <input type="text" class="form-control" id="address" name="address" value="<?= $address ?>" placeholder="Enter your Address">
                 </div>
             </div>
             <div class="form-group row">

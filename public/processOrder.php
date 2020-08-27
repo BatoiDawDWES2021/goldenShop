@@ -20,15 +20,12 @@ require_once dirname(__FILE__) . '/../config/config.php';
         <?php
             $total = 0;
             foreach ($products as $product){
-                $id =  str_replace('.','_',$product['quantity']).$product['format'].$product['metal'];
-                if (is_numeric($_POST[$id])){
-                    $descripcion = $product['quantity'].' '.$product['format'].' '.$product['metal'];
-                    $valorMetal = $product['metal'] == 'Gold'?$preu['Gold']:$preu['Silver'];
-                    $valorTotal = $product['format'] == 'Coin'?$valorMetal*$product['quantity']:($valorMetal/PES_ONZA)*$product['quantity'];
-                    $preuLinea = $_POST[$id] * $valorTotal;
+                $amount = $_POST[id($product)];
+                if (is_numeric($amount)){
+                    $preuLinea = valorTotal($amount,$product);
                     $total += $preuLinea;
         ?>
-            <tr><td><?= $_POST[$id] ; ?></td><td><?= $descripcion ?></td><td><?php printf("%.2f",$preuLinea); ?></td></tr>
+            <tr><td><?= $amount ?></td><td><?= description($product) ?></td><td><?php printf("%.2f",$preuLinea); ?></td></tr>
         <?php
                 }
             }
