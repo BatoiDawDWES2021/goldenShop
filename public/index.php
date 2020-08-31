@@ -1,36 +1,48 @@
 <?php
-    include_once dirname(__FILE__) . '/../config/config.php';
+    require_once('../templates/header.php');
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Page Content -->
+  <div class="container">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <title>Order</title>
-</head>
-<body style="margin: 20px;">
-<div class="container" >
-    <form action="processOrder.php" method="post">
+    <div class="row">
+
+      <?php require_once ('../templates/category.php'); ?>
+
+
+      <div class="col-lg-9">
+
+        <div class="row">
         <?php
-            foreach ($products as $product){
+             foreach ($products as $product){
         ?>
-            <div class="form-group row">
-                <label for="<?= id($product) ?>" class="col-sm-3 col-form-label col-form-label-sm"><?= description($product) ?> (<?= preu($product) ?>)</label>
-                <div class="col-sm-1">
-                    <input type="text" class="form-control" id="<?= id($product) ?>"" name="<?= id($product) ?>"" placeholder="Enter quantity">
-                </div>
-                <div class="col-sm-3"><img width="70px" height="70px" src="/img/<?= id($product)?>.jpg"/></div>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="p"><img class="card-img-top" src="/img/<?= id($product)?>.jpg" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="processOrder.php"><?= description($product) ?></a>
+                </h4>
+                <h5>$<?= printf("%.1f",preu($product)) ?></h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+              </div>
             </div>
-        <?php
-            }
-        ?>
+          </div>
+          <?php } ?>
+        </div>
+        <!-- /.row -->
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
-</body>
-</html>
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+<?php
+    require_once ('../templates/footer.php');
+?>
