@@ -1,5 +1,5 @@
 <?php
-include_once dirname(__FILE__) . '/../config/config.php';
+require_once('../templates/header.php');
 
 $errors = function() use ($shipping){
     $errors = array();
@@ -21,18 +21,14 @@ $errors = function() use ($shipping){
     return $errors;
 };
 ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Page Content -->
+<div class="container">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <title>Process Adress</title>
-</head>
-<body style="margin: 20px;">
+    <div class="row">
+
+        <?php require_once ('../templates/category.php'); ?>
+        <div class="col-lg-9">
+            <div class="container" >
 <?php
 
     if (isset($_POST['email'])){
@@ -52,7 +48,7 @@ $errors = function() use ($shipping){
 
     if (!isset($fin)){
 ?>
-    <div class="container" >
+
         <form action="processAdress.php" method="post">
             <div class="form-group row">
                 <label for="name" class="col-sm-3 col-form-label col-form-label-sm">Enter your Name:</label>
@@ -89,5 +85,15 @@ $errors = function() use ($shipping){
         </form>
     </div>
 <?php } ?>
-</body>
-</html>
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+<?php
+require_once ('../templates/footer.php');
+?>
+
