@@ -14,7 +14,21 @@ include_once dirname(__FILE__) . '/../config/config.php';
 </head>
 <body style="margin: 20px;">
     <div class="container" >
-            <form action="processPayment.php" method="post">
+            <form action="processPayment.php" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="form-group row">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="typeCard" id="inlineRadio1" value="visa">
+                        <label class="form-check-label" for="inlineRadio1">Visa</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="typeCard" id="inlineRadio2" value="mastercard">
+                        <label class="form-check-label" for="inlineRadio2">Mastercard</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="typeCard" id="inlineRadio3" value="maestro">
+                        <label class="form-check-label" for="inlineRadio3">Maestro</label>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="name" class="col-sm-3 col-form-label col-form-label-sm">Enter the CardHolder's Name:</label>
                     <div class="col-sm-3">
@@ -40,9 +54,9 @@ include_once dirname(__FILE__) . '/../config/config.php';
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="address" class="col-sm-3 col-form-label col-form-label-sm">Address:</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter your Address">
+                    <div class="custom-file col-sm-3">
+                        <input type="file" class="custom-file-input" name="dni" id="customFile">
+                        <label class="custom-file-label" for="customFile">DNI picture</label>
                     </div>
                 </div>
 
