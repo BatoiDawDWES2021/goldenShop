@@ -1,5 +1,19 @@
 <?php
     require_once('../templates/header.php');
+    function isMetal($product){
+        return ($product['metal'] === $_GET['filter']);
+    }
+    if( parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) != $_SERVER['HTTP_HOST']) {
+        unset($_GET['filter']);
+    }
+
+    if (isset($_GET['filter'])) {
+        $filter_products = array_filter($products,"isMetal");
+    }
+    else {
+        $filter_products = $products;
+    }
+
 ?>
   <!-- Page Content -->
   <div class="container">
@@ -13,7 +27,7 @@
 
         <div class="row">
         <?php
-             foreach ($products as $product){
+             foreach ($filter_products as $product){
         ?>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">

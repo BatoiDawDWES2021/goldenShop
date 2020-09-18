@@ -1,22 +1,59 @@
 <?php
 include_once dirname(__FILE__) . '/../config/config.php';
 require_once('../templates/header.php');
-
 $errors = function() use ($shipping){
+    $phpFileUploadErrors = array(
+        0 => 'There is no error, the file uploaded with success',
+        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+        3 => 'The uploaded file was only partially uploaded',
+        4 => 'No file was uploaded',
+        6 => 'Missing a temporary folder',
+        7 => 'Failed to write file to disk.',
+        8 => 'A PHP extension stopped the file upload.',
+    );
     $errors = array();
     extract($_POST);
     if (empty($typeCard)){
-        $errors[] = "Field TypeCard is required";
+        $errors['typeCard'] = "Field TypeCard is required";
     }
     if (empty($name)){
-        $errors[] = "Field name is required";
+        $errors['name'] = "Field name is required";
     }
-    if (empty($creditCardNumber) || strlen($creditCardNumber) != 12) {
-        $errors[] = "Credit Card Number is required or is not correct";
+    if (empty($cardNumber) || strlen($cardNumber) != 12) {
+        $errors['cardNumber'] = "Credit Card Number is required or is not correct";
     }
+
+    if (empty($expirationDate) || date_create_from_format('m/y',$expirationDate) < new dateTime()) {
+        $errors['expirationDate'] = "Expiration date must be in the future";
+    }
+
+
+    if (is_uploaded_file($_FILES['dni']['tmp_name'])){
+        if ($_FILES['dni']['error'] > 0){
+            $errors['dni'] = $phpFileUploadErrors[$_FILES['dni']['error']];
+        } else {
+            if ($_FILES['dni']['type'] !== 'image/jpeg'){
+                $errors['dni'] = 'Type of file not supported '.$_FILES['dni']['type'];
+            }
+        }
+    }
+    else {
+        $errors['dni'] = "Suspicious";
+    }
+
 
     return $errors;
 };
+function showError($arrayErrors,$field){
+     if (array_key_exists($field,$arrayErrors)) {
+        return "<div id='nameFeedback' class='invalid-feedback'>".$arrayErrors[$field]."</div>";
+     }
+     return "";
+}
+function classError($arrayErrors,$field){
+    return array_key_exists($field,$arrayErrors)?'is-invalid':'is-valid';
+}
 ?>
 
     <div class="container" >
@@ -25,27 +62,21 @@ $errors = function() use ($shipping){
             <?php require_once ('../templates/category.php'); ?>
             <div class="col-lg-9">
                 <?php
-
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    extract($_POST);
-                    if (count($errors())) {
-                        foreach ($errors() as $error) {
-                            echo "<p>$error</p>";
-                        }
+                if ($_SERVER["REQUEST_METHOD"] == "POST" && count($errors()) === 0 ) {
+                    if (!move_uploaded_file($_FILES['dni']['tmp_name'], './dni/'.$_POST['cardNumber'].'.jpg')) {
+                        echo "Error copying file";
+                    } else {
+                        echo "File upload";
                     }
-                    else {
-                        $fin = true;
-                        foreach ($_POST as $key => $value){
-                            echo "<p><b>".ucfirst($key)."</b> : ".htmlspecialchars($value)."</p>";
-                        }
+                    foreach ($_POST as $key => $value) {
+                        echo "<p><b>" . ucfirst($key) . "</b> : " . htmlspecialchars($value) . "</p>";
                     }
                 }
-
-                if (!isset($fin)){
+                else {
                 ?>
             <div class="container" >
-                    <form action="processPayment.php" method="post" enctype="application/x-www-form-urlencoded">
-                        <div class="form-group row">
+                    <form action="processPayment.php" method="post" enctype="multipart/form-data">
+                        <div class="form-control row">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="typeCard" id="inlineRadio1" value="visa">
                                 <label class="form-check-label" for="inlineRadio1">Visa</label>
@@ -58,35 +89,41 @@ $errors = function() use ($shipping){
                                 <input class="form-check-input" type="radio" name="typeCard" id="inlineRadio3" value="maestro">
                                 <label class="form-check-label" for="inlineRadio3">Maestro</label>
                             </div>
+
                         </div>
                         <div class="form-group row">
                             <label for="name" class="col-sm-3 col-form-label col-form-label-sm">Enter the CardHolder's Name:</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+                                <input type="text" class="form-control <?= classError($errors(),'name') ?>" id="name" name="name" placeholder="Enter your name">
+                                <?= showError($errors(),'name') ?>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="cardNumber" class="col-sm-3 col-form-label col-form-label-sm">Enter your Credit Card Number:</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter your creditCard Number">
+                                <input type="text" class="form-control <?= classError($errors(),'cardNumber') ?>" id="cardNumber" name="cardNumber" placeholder="Enter your creditCard Number">
+                                <?= showError($errors(),'cardNumber') ?>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="expirationDate" class="col-sm-3 col-form-label col-form-label-sm">Enter Credit's Card expiration Date:</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="expirationDate" name="expirationDate" placeholder="Enter Credit's Card expiration Date">
+                                <input type="text" class="form-control <?= classError($errors(),'expirationDate') ?>" id="expirationDate" name="expirationDate" placeholder="Enter Credit's Card expiration Date">
+                                <?= showError($errors(),'expirationDate') ?>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="securityCode" class="col-sm-3 col-form-label col-form-label-sm">Enter Credit's Card expiration Date:</label>
+                            <label for="securityCode" class="col-sm-3 col-form-label col-form-label-sm">Enter Security Code:</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="securityCode" name="securityCode" placeholder="Enter Your Security Code">
+                                <input type="text" class="form-control <?= classError($errors(),'securityCode') ?>" id="securityCode" name="securityCode" placeholder="Enter Your Security Code">
+                                <?= showError($errors(),'securityCode') ?>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="custom-file col-sm-3">
-                                <input type="file" class="custom-file-input" name="dni" id="customFile">
                                 <label class="custom-file-label" for="customFile">DNI picture</label>
+                                <input type="file" class="custom-file-input" name="dni" id="customFile">
+                                <?= showError($errors(),'dni') ?>
                             </div>
                         </div>
 

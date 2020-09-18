@@ -27,7 +27,7 @@ function valorTotal($amount,$product){
 function preu($product){
     global $preu;
 
-    $valorMetal = $product['metal'] == 'Gold'?$preu['Gold']:$preu['Silver'];
+    $valorMetal = $preu[$product['metal']];
     return $product['format'] == 'Coin'?$valorMetal*$product['quantity']:($valorMetal/PES_ONZA)*$product['quantity'];
 }
 

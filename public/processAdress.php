@@ -41,7 +41,7 @@ $errors = function() use ($shipping){
         else {
             $fin = true;
             foreach ($_POST as $key => $value){
-                echo "<p><b>".ucfirst($key)."</b> : $value</p>";
+                echo "<p><b>".ucfirst($key)."</b> : ".htmlspecialchars($value)."</p>";
             }
         }
     }
