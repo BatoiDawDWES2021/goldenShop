@@ -10,17 +10,46 @@ services:
       - "9001:9001"
     volumes:
       - ../:/var/www/sites:ro
-      - ./docker-nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - phpmyadmindata:/usr/src/phpmyadmin
     depends_on:
       - php
+      - phpmyadmin
   # PHP Service
   php:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./php
+      dockerfile: DockerFile
     container_name: php
     restart: unless-stopped
     working_dir: /var/www/sites
     volumes:
       - ../:/var/www/sites
-      - ./xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./php/mods-available/xdebug.ini:/usr/local/etc/php/conf.d/basicPHPDocker-php-ext-xdebug.ini
+    depends_on:
+      - mysql
+  # MySQL Service
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - ./.basicPHPDocker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - mysqldata:/var/lib/mysql
+  # PhpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5-fpm-alpine
+    container_name: phpmyadmin
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: mysql
+    volumes:
+      - phpmyadmindata:/usr/src/phpmyadmin
+    depends_on:
+      - mysql
+# Volumes
+volumes:
+  mysqldata:
+  phpmyadmindata:
