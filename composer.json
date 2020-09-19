@@ -1,5 +1,6 @@
 {
-    "name": "php/repositoriBasic",
+    "name": "practica1/batoi",
+    "description" : "Practica 1 - Curs Accelerat",
     "type": "project",
     "license": "MIT",
     "authors": [

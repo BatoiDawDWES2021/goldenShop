@@ -7,7 +7,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - ${BASE_DIRECTORY}:/var/www/sites:ro
+      - ../:/var/www/sites:ro
       - ./docker-nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
@@ -16,7 +16,7 @@ services:
     build: config/php
     working_dir: /var/www/sites
     volumes:
-      - ${BASE_DIRECTORY}:/var/www/sites
+      - ../:/var/www/sites
     command: vendor/bin/phpunit tests
 
 
