@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once dirname(__FILE__) . '/../config/config.php';
 require_once('../templates/header.php');
 $errors = function() use ($shipping){
@@ -81,7 +82,28 @@ function classError($arrayErrors,$field){
                 else {
                     extract($_POST);
                 ?>
+
             <div class="container" >
+                <?php
+                    $order = unserialize($_SESSION['order']);
+                    $address = unserialize($_SESSION['address']);
+                    $total = 0;
+                    echo "<table>";
+                    foreach ($products as $product){
+                        $amount = $order[id($product)];
+                        if (is_numeric($amount)){
+                            $preuLinea = valorTotal($amount,$product);
+                            $total += $preuLinea;
+                            ?>
+                            <tr><td><?= $amount ?></td><td><?= description($product) ?></td><td><?php printf("%.2f",$preuLinea); ?></td></tr>
+                            <?php
+                        }
+                    }
+                    printf("<tr><td>Total</td><td>%.2f</td></tr></table>",$total);
+                    foreach ($address as $key => $value){
+                        echo "<p><b>".ucfirst($key)."</b> : ".htmlspecialchars($value)."</p>";
+                    }
+                ?>
                     <form action="processPayment.php" method="post" enctype="multipart/form-data">
                         <div class="form-control row">
                             <div class="form-check form-check-inline">

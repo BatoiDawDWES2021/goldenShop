@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../templates/header.php');
 
 $errors = function() use ($shipping){
@@ -43,12 +44,27 @@ $errors = function() use ($shipping){
             foreach ($_POST as $key => $value){
                 echo "<p><b>".ucfirst($key)."</b> : ".htmlspecialchars($value)."</p>";
             }
+            $_SESSION['address'] = serialize($_POST);
+            echo '<p><a class="btn btn-primary" href="processPayment.php" role="button">Address Info</a>';
         }
     }
 
     if (!isset($fin)){
-?>
-
+        $order = unserialize($_SESSION['order']);
+        $total = 0;
+        echo "<table>";
+        foreach ($products as $product){
+            $amount = $order[id($product)];
+            if (is_numeric($amount)){
+                $preuLinea = valorTotal($amount,$product);
+                $total += $preuLinea;
+                ?>
+                <tr><td><?= $amount ?></td><td><?= description($product) ?></td><td><?php printf("%.2f",$preuLinea); ?></td></tr>
+                <?php
+            }
+        }
+        printf("<tr><td>Total</td><td>%.2f</td></tr></table>",$total);
+        ?>
         <form action="processAdress.php" method="post">
             <div class="form-group row">
                 <label for="name" class="col-sm-3 col-form-label col-form-label-sm">Enter your Name:</label>
@@ -83,6 +99,7 @@ $errors = function() use ($shipping){
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        </p>
     </div>
 <?php } ?>
         </div>
