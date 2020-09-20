@@ -1,4 +1,4 @@
-<div class="col-md-3 col-lg-3">
+
     <div class="ibox">
         <div class="ibox-title">
             <h5>Cart Summary</h5>
@@ -8,7 +8,7 @@
                         Total
                     </span>
             <h2 class="font-bold">
-                <?php printf("%.2f €",$total); ?>
+                <?php printf("%.2f €",totalShopping()); ?>
             </h2>
             <div class="m-t-sm">
                 <div class="btn-group">
@@ -18,4 +18,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -14,3 +14,4 @@ $products = array(
     ['metal' => 'Platinum' , 'format' => 'Bar' ,  'quantity' => 500],
 );
 $shipping = array ('03','46');
+
