@@ -32,7 +32,14 @@ $errors = function() use ($shipping){
                 $_SESSION['address'] = serialize($_POST);
                 require_once('../templates/shoppingCart.php');
             } else {
-                extract($_POST);
+                if ($_SERVER["REQUEST_METHOD"] == "POST"){
+                    extract($_POST);
+                } else {
+                    if (isset($_SESSION['usuario'])) {
+                        extract(unserialize($_SESSION['usuario']));
+                    }
+                }
+
                 require_once('../templates/formAddress.php');
             }
         ?>

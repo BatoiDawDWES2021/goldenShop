@@ -43,11 +43,19 @@ include_once dirname(__FILE__) . '/../config/config.php';
             <a class="nav-link" href="/processOrder.php">Shop</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
+            <a class="nav-link" href="/login.php">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="/logout.php">Logout</a>
           </li>
+            <?php
+                if (isset($_SESSION['usuario'])){
+                    $usuario = unserialize($_SESSION['usuario'])
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><?= $usuario['name'] ?></a>
+                </li>
+            <?php } ?>
         </ul>
       </div>
     </div>
