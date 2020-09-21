@@ -48,7 +48,7 @@ $errors = function() use ($shipping){
                 <?php
                 if ($_SERVER["REQUEST_METHOD"] == "POST" && count($errors()) === 0 ) {
                 ?>
-                    <div class="col-lg-9">
+                    <div class="col-lg-6 col-md-6">
                 <?php
                     $destination = './dni/'.$_POST['cardNumber'].'.jpg';
                     if (!move_uploaded_file($_FILES['dni']['tmp_name'],$destination )) {

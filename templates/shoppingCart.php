@@ -1,7 +1,19 @@
+<?php
+    $items = unserialize($_SESSION['order']);
+
+    $count = function() use ($items) {
+        $count = 0;
+        foreach ($items as $item){
+            if ($item > 0) $count++;
+        }
+        return $count;
+    };
+
+?>
 <div class="col-lg-6 col-md-6">
     <div class="ibox">
         <div class="ibox-title">
-            <span class="pull-right">(<strong><?= count($_POST) ?></strong>) items</span>
+            <span class="pull-right">(<strong><?= $count() ?></strong>) items</span>
             <h5>Batoi's BuyGOLD - Items in your cart</h5>
         </div>
         <div class="ibox-content">
@@ -9,7 +21,6 @@
                 <table class="table shoping-cart-table">
                     <tbody>
                     <?php
-                    $items = unserialize($_SESSION['order']);
                     $total = 0;
                     foreach ($products as $product) {
                         $amount = $items[id($product)];
