@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: mysql
--- Temps de generació: 27-09-2020 a les 06:43:22
+-- Temps de generació: 28-09-2020 a les 06:15:46
 -- Versió del servidor: 8.0.21
 -- Versió de PHP: 7.4.4
 
@@ -57,8 +57,22 @@ CREATE TABLE `products` (
   `codi` varchar(20) NOT NULL,
   `metal` varchar(10) NOT NULL,
   `format` varchar(5) NOT NULL,
-  `quantity` int NOT NULL
+  `quantity` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Bolcament de dades per a la taula `products`
+--
+
+INSERT INTO `products` (`codi`, `metal`, `format`, `quantity`) VALUES
+('0_5coinGold', 'Gold', 'Coin', 0.5),
+('1000BarSilver', 'Silver', 'Bar', 1000),
+('100BarGold', 'Gold', 'Bar', 100),
+('1CoinGold', 'Gold', 'Coin', 1),
+('1CoinSilver', 'Silver', 'Coin', 1),
+('500BarGold', 'Gold', 'Bar', 500),
+('500BarPlatinum', 'Platinum', 'Bar', 500),
+('500BarSilver', 'Silver', 'Bar', 500);
 
 -- --------------------------------------------------------
 
