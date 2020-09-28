@@ -14,6 +14,9 @@
         $filter_products = $products;
     }
 
+
+
+
 ?>
   <!-- Page Content -->
   <div class="container">

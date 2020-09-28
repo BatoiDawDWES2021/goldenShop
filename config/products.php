@@ -1,6 +1,6 @@
 <?php
 
-define('PES_ONZA',31.1);
+define('PES_ONZA',31,1);
 
 $preu = array ('Gold'=>1800, 'Silver'=> 26, 'Platinum' => 900);
 $products = array(

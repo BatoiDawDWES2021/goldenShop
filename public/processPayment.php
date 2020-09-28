@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once dirname(__FILE__) . '/../config/config.php';
+include_once dirname(__FILE__) . '/../config/exemptions.php';
 require_once('../templates/header.php');
 $errors = function() use ($shipping){
     $errors = array();
@@ -50,16 +51,25 @@ $errors = function() use ($shipping){
                 ?>
                     <div class="col-lg-6 col-md-6">
                 <?php
-                    $destination = './dni/'.$_POST['cardNumber'].'.jpg';
-                    if (!move_uploaded_file($_FILES['dni']['tmp_name'],$destination )) {
+                    try
+                    {
+                        $destination = './dnis/'.$_POST['cardNumber'].'.jpg';
+                        if (!move_uploaded_file($_FILES['dni']['tmp_name'],$destination )){
+                           throw new fileMovedException();
+                        }
+                       echo "File upload";
+                       echo "<img src='$destination' title='foto dni' width='320' height='240'/>";
+                    } catch (ErrorException $e){
                         echo "Error copying file";
-                    } else {
-                        echo "File upload";
+                    } catch (fileMovedException $e){
+                        echo "Error copying file";
+
+                    } finally {
                         foreach ($_POST as $key => $value) {
                             echo "<p><b>" . ucfirst($key) . "</b> : " . htmlspecialchars($value) . "</p>";
                         }
-                        echo "<img src='$destination' title='foto dni' width='320' height='240'/>";
                     }
+
                 ?>
                     </div>
                 <?php

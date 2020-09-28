@@ -19,7 +19,7 @@ services:
   php:
     build:
       context: ./php
-      dockerfile: DockerFile
+      dockerfile: Dockerfile
     container_name: php
     restart: unless-stopped
     working_dir: /var/www/sites
@@ -32,6 +32,8 @@ services:
   mysql:
     image: mysql:8
     container_name: mysql
+    ports:
+      - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: "root"
     volumes:

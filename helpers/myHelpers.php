@@ -29,8 +29,13 @@ function preu($product){
     global $preu;
 
     $valorMetal = $preu[$product['metal']];
-    return $product['format'] == 'Coin'?$valorMetal*$product['quantity']:($valorMetal/PES_ONZA)*$product['quantity'];
+    try {
+        return $product['format'] == 'Coin'?$valorMetal*$product['quantity']:($valorMetal/PES_ONZA)*$product['quantity'];
+    } catch (ErrorException $e){
+        return $product['format'] == 'Coin'?$valorMetal*$product['quantity']:0;
+    }
 }
+
 function totalShopping(){
     include dirname(__FILE__) . '/../config/products.php';
     $total = 0;
@@ -51,6 +56,7 @@ function showError($arrayErrors,$field){
     }
     return "";
 }
+
 function classError($arrayErrors,$field){
     return array_key_exists($field,$arrayErrors)?'is-invalid':'is-valid';
 }

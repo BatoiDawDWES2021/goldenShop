@@ -13,9 +13,7 @@ COPY ./mods-available/xdebug.ini /etc/php/${PHP_VERSION}/mods-available/xdebug.i
 
 RUN apk update && \
      apk add libzip-dev \
-         && docker-php-ext-install zip
-
-RUN docker-php-ext-install pdo_mysql
+         && docker-php-ext-install zip pdo pdo_mysql
 
 
 # Install Composer
