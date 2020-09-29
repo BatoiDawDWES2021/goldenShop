@@ -26,10 +26,10 @@ $errors = function() use ($shipping){
 
     if (is_uploaded_file($_FILES['dni']['tmp_name'])){
         if ($_FILES['dni']['error'] > 0){
-            $errors['dni'] = $phpFileUploadErrors[$_FILES['dni']['error']];
+            $errors['dni'] = $phpFileUploadErrors[$_FILES['dnis']['error']];
         } else {
             if ($_FILES['dni']['type'] !== 'image/jpeg'){
-                $errors['dni'] = 'Type of file not supported '.$_FILES['dni']['type'];
+                $errors['dni'] = 'Type of file not supported '.$_FILES['dnis']['type'];
             }
         }
     }
@@ -58,9 +58,8 @@ $errors = function() use ($shipping){
                            throw new fileMovedException();
                         }
                        echo "File upload";
-                       echo "<img src='$destination' title='foto dni' width='320' height='240'/>";
-                    } catch (ErrorException $e){
-                        echo "Error copying file";
+                       echo "<img src='$destination' title='foto dnis' width='320' height='240'/>";
+                       guardarPedido();
                     } catch (fileMovedException $e){
                         echo "Error copying file";
 

@@ -13,7 +13,7 @@ function comprobar_usuario($usuarios,$nombre, $clave){
     };
     $linea = $found();
     if ($linea === false) return false;
-    if ($clave !== $usuarios[$linea]['password']) return false;
+    if (hash('sha256',$clave) !== $usuarios[$linea]['password']) return false;
     return $linea;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST"){

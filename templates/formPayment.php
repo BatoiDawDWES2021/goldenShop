@@ -50,7 +50,7 @@
                     <label class="custom-file-label " for="customFile">DNI picture</label>
                 </div>
                 <div class="input-group-append">
-                    <button class="btn btn-outline-danger" type="button"><?= $errors()['dni']?></button>
+                    <button class="btn btn-outline-danger" type="button"><?= $errors()['dnis']?></button>
                 </div>
             </div>
         </div>
