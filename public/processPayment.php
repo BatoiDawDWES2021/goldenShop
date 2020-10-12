@@ -59,7 +59,8 @@ $errors = function() use ($shipping){
                         }
                        echo "File upload";
                        echo "<img src='$destination' title='foto dnis' width='320' height='240'/>";
-                       guardarPedido();
+                       $product = new ShoppingCart();
+                       $product->guardarPedido($conn);
                     } catch (fileMovedException $e){
                         echo "Error copying file";
 

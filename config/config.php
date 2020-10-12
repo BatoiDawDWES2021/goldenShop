@@ -1,7 +1,9 @@
 <?php
+session_start();
 require dirname(__FILE__) . "/../vendor/autoload.php";
 require dirname(__FILE__) . "/connection.php";
-require dirname(__FILE__) . "/products.php";
+require dirname(__FILE__) . "/../objects/Product.php";
+require dirname(__FILE__) . "/../objects/ShoppingCart.php";
 require dirname(__FILE__) . "/../helpers/myHelpers.php";
 
 
@@ -18,4 +20,11 @@ $phpFileUploadErrors = array(
     7 => 'Failed to write file to disk.',
     8 => 'A PHP extension stopped the file upload.',
 );
+
+define('PES_ONZA',31,1);
+$preu = array ('Gold'=>1800, 'Silver'=> 26, 'Platinum' => 900);
+$shipping = array ('03','46');
+$products = Product::selectAll($conn);
+
+$order = new ShoppingCart();
 

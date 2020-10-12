@@ -1,19 +1,7 @@
-<?php
-    $items = unserialize($_SESSION['order']);
-
-    $count = function() use ($items) {
-        $count = 0;
-        foreach ($items as $item){
-            if ($item > 0) $count++;
-        }
-        return $count;
-    };
-
-?>
 <div class="col-lg-6 col-md-6">
     <div class="ibox">
         <div class="ibox-title">
-            <span class="pull-right">(<strong><?= $count() ?></strong>) items</span>
+            <span class="pull-right">(<strong><?= $order->count() ?></strong>) items</span>
             <h5>Batoi's BuyGOLD - Items in your cart</h5>
         </div>
         <div class="ibox-content">
@@ -21,27 +9,25 @@
                 <table class="table shoping-cart-table">
                     <tbody>
                     <?php
-                    $total = 0;
-                    foreach ($products as $product) {
-                        $amount = $items[id($product)];
-                        if (is_numeric($amount)) {
-                            $preuLinea = valorTotal($amount, $product);
-                            $total += $preuLinea;
+                    foreach ($order->allProducts() as $codi => $quantity) {
+                        $product = Product::select($conn,$codi);
+                        $amount = $product->preu();
+                        $preuLinea = $quantity * $amount;
                             ?>
                             <tr>
                                 <td width="80">
                                     <div class="cart-product-imitation">
-                                        <img height="70x" width="70x" src="/img/<?= id($product) ?>.jpg"/>
+                                        <img height="70x" width="70x" src="<?= $product->img() ?>"/>
                                     </div>
                                 </td>
                                 <td class="desc">
                                     <h3>
                                         <a href="#" class="text-navy">
-                                            <?= description($product) ?>
+                                            <?= $product ?>
                                         </a>
                                     </h3>
                                     <div class="m-t-sm">
-                                        <a href="removeItem.php?prod=<?= id($product) ?>" class="text-muted"><i
+                                        <a href="removeItem.php?prod=<?= $codi ?>" class="text-muted"><i
                                                 class="fa fa-trash"></i> Remove item</a>
                                     </div>
                                 </td>
@@ -54,7 +40,6 @@
                             </tr>
                             <?php
                         }
-                    }
                     ?>
                     </tbody>
                 </table>

@@ -9,7 +9,7 @@ require_once('../templates/header.php');
         <?php
             require_once('../templates/category.php');
             if (count($_POST) > 0) {
-                $_SESSION['order'] = serialize($_POST);
+                $order->addProducts($_POST);
                 require_once('../templates/shoppingCart.php');
             } else {
                 require_once('../templates/formShop.php');
