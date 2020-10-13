@@ -33,8 +33,6 @@ class Product
         return $array;
     }
 
-
-
     public static function select($conn,$codi){
         $rQuery =  $conn->query("SELECT *  FROM products WHERE codi='$codi'");
         $product = $rQuery->fetch();
@@ -61,9 +59,6 @@ class Product
         return "/img/".$this->codi.".jpg";
     }
 
-    /**
-     * @return mixed
-     */
     public function getCodi()
     {
         return $this->codi;

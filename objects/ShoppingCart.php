@@ -41,8 +41,6 @@ class ShoppingCart
         $this->save();
     }
 
-
-
     public function totalShopping()
     {
         include dirname(__FILE__) . '/../config/connection.php';
