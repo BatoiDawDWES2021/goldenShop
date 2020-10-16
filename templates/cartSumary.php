@@ -8,7 +8,7 @@
                         Total
                     </span>
             <h2 class="font-bold">
-                <?php printf("%.2f €",totalShopping()); ?>
+                <?php printf("%.2f €",$order->totalShoping()); ?>
             </h2>
             <div class="m-t-sm">
                 <div class="btn-group">

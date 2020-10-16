@@ -4,13 +4,13 @@
         foreach ($products as $product) {
             ?>
             <div class="form-group row">
-                <label for="<?= id($product) ?>"
-                       class="col-sm-5 col-form-label col-form-label-sm"><?= description($product) ?>
-                    (<?= preu($product) ?>)</label>
+                <label for="<?= $product->getCodi() ?>"
+                       class="col-sm-5 col-form-label col-form-label-sm"><?= $product ?>
+                    (<?= $product->preu() ?>)</label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" id="<?= id($product) ?>" name="<?= id($product) ?>" placeholder="Enter quantity">
+                    <input type="text" class="form-control" id="<?=  $product->getCodi() ?>" name="<?=  $product->getCodi() ?>" placeholder="Enter quantity">
                 </div>
-                <div class="col-sm-5"><img width="70px" height="70px" src="/img/<?= id($product) ?>.jpg"/></div>
+                <div class="col-sm-5"><img width="70px" height="70px" src="<?= $product->img() ?>"/></div>
             </div>
             <?php
         }

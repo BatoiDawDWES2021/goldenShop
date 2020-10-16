@@ -1,19 +1,16 @@
 <?php
     require_once('../templates/header.php');
-    function isMetal($product){
-        return ($product['metal'] === $_GET['filter']);
-    }
+
     if( parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) != $_SERVER['HTTP_HOST']) {
         unset($_GET['filter']);
     }
 
     if (isset($_GET['filter'])) {
-        $filter_products = array_filter($products,"isMetal");
+        $filter_products = Product::selectMetal($conn,$_GET['filter']);
     }
     else {
         $filter_products = $products;
     }
-
 
 
 
@@ -34,12 +31,12 @@
         ?>
           <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
-              <a href="p"><img class="card-img-top" src="/img/<?= id($product)?>.jpg" alt=""></a>
+              <a href="p"><img class="card-img-top" src="<?= $product->img() ?>" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="processOrder.php"><?= description($product) ?></a>
+                  <a href="processOrder.php"><?= $product ?></a>
                 </h4>
-                <h5>$<?= printf("%.1f",preu($product)) ?></h5>
+                <h5>$<?= printf("%.1f",$product->preu()) ?></h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
               </div>
               <div class="card-footer">
